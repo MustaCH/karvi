@@ -1,9 +1,9 @@
-import { CarCardContainer, FiltersContainer } from "./containers";
+import { MarketplaceContainer } from "./containers";
 
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <CarCardContainer />
+      <MarketplaceContainer />
     </div>
   );
 }
