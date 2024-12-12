@@ -1,4 +1,4 @@
-import { Button, Divider } from "@nextui-org/react";
+import { Button, ButtonGroup, Divider } from "@nextui-org/react";
 import { FC } from "react";
 import FilterDrawer from "../filter-drawer";
 import { IoSearchOutline } from "react-icons/io5";
@@ -10,25 +10,26 @@ interface MobileControlersProps {
 
 export const MobileControlers: FC<MobileControlersProps> = ({ onOpen }) => {
   return (
-    <>
+    <ButtonGroup className="w-full h-fit mx-4 ">
       <Button
         className="text-[#566DED] font-semibold"
         variant="light"
         onPress={onOpen}
+        fullWidth
         startContent={<IoSearchOutline />}
       >
         Buscar
       </Button>
-      <Divider orientation="vertical" />
       <Button
         className="text-[#566DED] font-semibold"
         variant="light"
         onPress={onOpen}
+        fullWidth
         startContent={<FilterIcon />}
       >
         Filtrar
       </Button>
-    </>
+    </ButtonGroup>
   );
 };
 

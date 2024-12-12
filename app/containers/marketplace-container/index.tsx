@@ -3,11 +3,9 @@
 import { FilterChips, FilterDrawer, MobileControlers } from "@/app/components";
 import { ICarType } from "@/app/types";
 import { FC, useEffect, useState } from "react";
-import { Button, Divider, useDisclosure } from "@nextui-org/react";
+import { useDisclosure } from "@nextui-org/react";
 import { fetchCarData, fetchFilteredCarData } from "@/app/services";
 import FiltersContainer from "../filters-container";
-import { FilterIcon } from "@/app/icons";
-import { IoSearchOutline } from "react-icons/io5";
 import { GridControlers } from "@/app/components/grid-controllers";
 import CarCardContainer from "../car-card-container";
 import PaginationContainer from "../pagination-container";
@@ -181,6 +179,7 @@ const MarketplaceContainer: FC = () => {
         <MobileControlers onOpen={onOpen} />
         <FilterDrawer
           isOpen={isOpen}
+          cars={cars}
           onOpenChange={onOpenChange}
           selectedFilters={selectedFilters}
           filters={filters}

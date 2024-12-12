@@ -6,6 +6,7 @@ import { ICarType } from "@/app/types";
 
 interface FilterDrawerProps {
   isOpen: boolean;
+  cars: ICarType[];
   onOpenChange: () => void;
   selectedFilters: Partial<ICarType>;
   filters: Record<string, Record<string, number>>;
@@ -19,6 +20,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({
   onOpenChange,
   selectedFilters,
   filters,
+  cars,
   handleRemoveFilter,
   handleClearFilters,
   handleApplyFilters,
@@ -33,6 +35,7 @@ export const FilterDrawer: FC<FilterDrawerProps> = ({
         />
         <FiltersContainer
           filters={filters}
+          allCars={cars}
           onApplyFilters={handleApplyFilters}
           selectedFilters={selectedFilters}
         />

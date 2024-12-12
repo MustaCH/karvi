@@ -54,7 +54,7 @@ export const FiltersContainer: FC<FiltersContainerProps> = ({
   ) => {
     const updatedFilters = {
       ...selectedFilters,
-      [key]: key === "year" ? Number(value) : value, // Convertimos el año a número
+      [key]: key === "year" ? Number(value) : value,
     };
     onApplyFilters(updatedFilters);
   };
