@@ -2,9 +2,8 @@ import { CashRegisterIcon } from "@/app/icons";
 import { ICarType } from "@/app/types";
 import { NumberFormatter } from "@/app/utils";
 import { Button, Chip, Image } from "@nextui-org/react";
-import { div } from "framer-motion/client";
 import { FC } from "react";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsHeart } from "react-icons/bs";
 
 interface CarCardProps {
   car: ICarType;
