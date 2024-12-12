@@ -8,3 +8,8 @@ export type ICarType = {
     price: number,
     mileage: number,
 }
+
+export type IFilterType = {
+    id: string,
+    title: string
+}

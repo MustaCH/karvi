@@ -3,7 +3,9 @@ import { ICarType } from "@/app/types";
 
 const API_URL = "/api/challenge/cars/ASST-challenge-01JEVJTR90HVPSS2NRPPG02CJ3.json";
 
-export const fetchCarData = async (page: number = 1, pageSize: number = 12): Promise<{ cars: ICarType[], totalCount: number }> => {
+type FilterCounts = Record<string, Record<string, number>>;
+
+export const fetchCarData = async (page: number = 1, pageSize: number = 12): Promise<{ cars: ICarType[], totalCount: number, filters: FilterCounts }> => {
     try {
         const response = await axios.get(API_URL);
         if (response.data && Array.isArray(response.data.items)) {
@@ -11,10 +13,22 @@ export const fetchCarData = async (page: number = 1, pageSize: number = 12): Pro
             const endIndex = startIndex + pageSize;
             const cars = response.data.items.slice(startIndex, endIndex);
             const totalCount = response.data.totalCount;
-            return { cars, totalCount };
+
+            const filters: FilterCounts = {};
+            response.data.items.forEach((car: ICarType) => {
+                Object.entries(car).forEach(([key, value]) => {
+                    if (typeof value === 'string' || typeof value === 'number') {
+                        if (!filters[key]) filters[key] = {};
+                        if (!filters[key][value]) filters[key][value] = 0;
+                        filters[key][value] += 1;
+                    }
+                });
+            });
+
+            return { cars, totalCount, filters };
         } else {
             console.error("La respuesta no contiene el array de items esperado", response.data);
-            return { cars: [], totalCount: 0 };
+            return { cars: [], totalCount: 0, filters: {} };
         }
     } catch (error) {
         console.error("Error al consumir la API:", error);

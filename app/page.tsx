@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { CarCardContainer } from "./containers";
+import { CarCardContainer, FiltersContainer } from "./containers";
 
 export default function Home() {
   return (
