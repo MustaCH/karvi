@@ -3,7 +3,15 @@
 import { CarCard, FilterChips, FilterDrawer } from "@/app/components";
 import { ICarType } from "@/app/types";
 import { FC, useEffect, useState } from "react";
-import { Button, Divider, Pagination, useDisclosure } from "@nextui-org/react";
+import {
+  Button,
+  Card,
+  Divider,
+  Pagination,
+  Skeleton,
+  Spinner,
+  useDisclosure,
+} from "@nextui-org/react";
 import { fetchCarData, fetchFilteredCarData } from "@/app/services";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import FiltersContainer from "../filters-container";
@@ -166,8 +174,6 @@ const CarCardContainer: FC = () => {
     }
   };
 
-  console.log("Autos: ", cars);
-
   return (
     <div className="flex flex-col lg:grid grid-cols-5 pt-8">
       <div className="hidden lg:inline mt-4">
@@ -230,9 +236,15 @@ const CarCardContainer: FC = () => {
               : "flex flex-col"
           } p-4`}
         >
-          {cars.map((car) => (
-            <CarCard key={car.id} car={car} gridMode={gridMode} />
-          ))}
+          {loading ? (
+            <div className="grid place-items-center h-[80vh]">
+              <Spinner size="lg" />
+            </div>
+          ) : (
+            cars.map((car) => (
+              <CarCard key={car.id} car={car} gridMode={gridMode} />
+            ))
+          )}
         </div>
         <div className="flex justify-between mt-4 px-4 pb-4 border-t-1 border-gray-300">
           <Button

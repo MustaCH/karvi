@@ -27,9 +27,15 @@ export const FiltersContainer: FC<FiltersContainerProps> = ({
 
     Object.entries(filters).forEach(([key, value]) => {
       if (value) {
-        filtered = filtered?.filter(
-          (car) => car[key as keyof ICarType] === value
-        );
+        if (key === "year") {
+          filtered = filtered?.filter(
+            (car) => car[key as keyof ICarType] === Number(value)
+          );
+        } else {
+          filtered = filtered?.filter(
+            (car) => car[key as keyof ICarType] === value
+          );
+        }
       }
     });
 
@@ -48,7 +54,7 @@ export const FiltersContainer: FC<FiltersContainerProps> = ({
   ) => {
     const updatedFilters = {
       ...selectedFilters,
-      [key]: value,
+      [key]: key === "year" ? Number(value) : value, // Convertimos el año a número
     };
     onApplyFilters(updatedFilters);
   };
