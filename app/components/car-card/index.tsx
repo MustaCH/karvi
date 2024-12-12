@@ -1,7 +1,7 @@
 import { CashRegisterIcon } from "@/app/icons";
 import { ICarType } from "@/app/types";
 import { NumberFormatter } from "@/app/utils";
-import { Button, Chip, Image } from "@nextui-org/react";
+import { Button, Chip } from "@nextui-org/react";
 import { FC } from "react";
 import { BsHeart } from "react-icons/bs";
 

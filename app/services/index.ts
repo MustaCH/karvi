@@ -49,7 +49,7 @@ export const fetchFilteredCarData = async (
   pageSize: number = 12
 ): Promise<{ cars: ICarType[]; totalCount: number }> => {
   try {
-    const { cars: allCars, totalCount } = await fetchCarData();
+    const { cars: allCars } = await fetchCarData();
     const filteredCars = allCars.filter(
       (car) =>
         (!filters.brand || car.brand === filters.brand) &&
