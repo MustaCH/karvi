@@ -7,18 +7,17 @@ import filterList from "./constants";
 
 interface FiltersContainerProps {
   filters: Record<string, Record<string, number>>;
+  selectedFilters?: Partial<ICarType>;
   onApplyFilters: (filters: Partial<ICarType>) => void;
 }
 
-export const FiltersContainer: FC<FiltersContainerProps> = ({ filters, onApplyFilters }) => {
-  const [selectedFilters, setSelectedFilters] = useState<Partial<ICarType>>({});
+export const FiltersContainer: FC<FiltersContainerProps> = ({ filters, onApplyFilters, selectedFilters }) => {
 
   const handleFilterChange = (key: keyof ICarType, value: string | number | undefined) => {
     const updatedFilters = {
       ...selectedFilters,
       [key]: value,
     };
-    setSelectedFilters(updatedFilters);
     onApplyFilters(updatedFilters);
   };
 
