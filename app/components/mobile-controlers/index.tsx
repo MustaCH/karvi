@@ -1,6 +1,5 @@
-import { Button, ButtonGroup, Divider } from "@nextui-org/react";
+import { Button, ButtonGroup } from "@nextui-org/react";
 import { FC } from "react";
-import FilterDrawer from "../filter-drawer";
 import { IoSearchOutline } from "react-icons/io5";
 import { FilterIcon } from "@/app/icons";
 
