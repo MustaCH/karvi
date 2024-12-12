@@ -166,6 +166,8 @@ const CarCardContainer: FC = () => {
     }
   };
 
+  console.log("Autos: ", cars);
+
   return (
     <div className="flex flex-col lg:grid grid-cols-5 pt-8">
       <div className="hidden lg:inline mt-4">

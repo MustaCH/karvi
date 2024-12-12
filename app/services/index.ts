@@ -54,8 +54,9 @@ export const fetchFilteredCarData = async (
       (car) =>
         (!filters.brand || car.brand === filters.brand) &&
         (!filters.model || car.model === filters.model) &&
-        (!filters.year || car.year === filters.year) &&
+        (!filters.year || car.year === Number(filters.year)) &&
         (!filters.price || car.price <= filters.price) &&
+        (!filters.version || car.version === filters.version) &&
         (!filters.mileage || car.mileage <= filters.mileage) &&
         (!filters.city || car.city === filters.city)
     );
