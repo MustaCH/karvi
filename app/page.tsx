@@ -2,8 +2,8 @@ import { CarCardContainer, FiltersContainer } from "./containers";
 
 export default function Home() {
   return (
-    <div>
-      <CarCardContainer/>
+    <div className="min-h-screen">
+      <CarCardContainer />
     </div>
   );
 }
