@@ -2,23 +2,14 @@
 
 import { CarCard, FilterChips, FilterDrawer } from "@/app/components";
 import { ICarType } from "@/app/types";
-import { BsGrid, BsListUl } from "react-icons/bs";
 import { FC, useEffect, useState } from "react";
-import {
-  Button,
-  Divider,
-  Drawer,
-  DrawerContent,
-  Pagination,
-  useDisclosure,
-} from "@nextui-org/react";
+import { Button, Divider, Pagination, useDisclosure } from "@nextui-org/react";
 import { fetchCarData, fetchFilteredCarData } from "@/app/services";
-import { NumberFormatter } from "@/app/utils";
-import { TbArrowsSort } from "react-icons/tb";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import FiltersContainer from "../filters-container";
 import { FilterIcon } from "@/app/icons";
 import { IoSearchOutline } from "react-icons/io5";
+import { GridControlers } from "@/app/components/grid-controllers";
 
 const PAGE_SIZE = 12;
 
@@ -179,6 +170,7 @@ const CarCardContainer: FC = () => {
     <div className="flex flex-col lg:grid grid-cols-5 pt-8">
       <div className="hidden lg:inline mt-4">
         <FiltersContainer
+          allCars={cars}
           filters={filters}
           onApplyFilters={handleApplyFilters}
           selectedFilters={selectedFilters}
@@ -200,7 +192,7 @@ const CarCardContainer: FC = () => {
           onPress={onOpen}
           startContent={<FilterIcon />}
         >
-          Open Drawer
+          Filtrar
         </Button>
         <FilterDrawer
           isOpen={isOpen}
@@ -220,42 +212,15 @@ const CarCardContainer: FC = () => {
             onClearFilters={handleClearFilters}
           />
         </div>
-        <div className="flex justify-between items-center pt-4 px-4">
-          <NumberFormatter
-            value={totalCount}
-            className="text-xs"
-            endContent="resultados"
-          />
-          <Button
-            className="md:hidden"
-            isIconOnly
-            variant="light"
-            onPress={() => setGridMode(!gridMode)}
-          >
-            {gridMode ? (
-              <BsListUl className="text-gray-700 text-xl" />
-            ) : (
-              <BsGrid className="text-gray-700 text-xl" />
-            )}
-          </Button>
-          <Button
-            onPress={() => setSortOrder(sortOrder === "desc" ? "asc" : "desc")}
-            className="hidden md:flex text-sm"
-            startContent={
-              <TbArrowsSort
-                className={`${
-                  sortOrder === "asc"
-                    ? "rotate-180 transition-all duration-250"
-                    : "rotate-[-180] transition-all duration-250"
-                } text-xl`}
-              />
-            }
-            variant="light"
-            color="primary"
-          >
-            {sortOrder === "desc" ? "Mayor Precio" : "Menor Precio"}
-          </Button>
-        </div>
+        <GridControlers
+          totalCount={totalCount}
+          gridMode={gridMode}
+          sortOrder={sortOrder}
+          onPressMode={() => setGridMode(!gridMode)}
+          onPressSort={() =>
+            setSortOrder(sortOrder === "desc" ? "asc" : "desc")
+          }
+        />
         <div
           className={`${
             gridMode
