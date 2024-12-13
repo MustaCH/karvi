@@ -38,7 +38,7 @@ const MarketplaceContainer: FC = () => {
         if (Object.keys(selectedFilters).length > 0) {
           const { cars: filteredCars, totalCount } = await fetchFilteredCarData(
             selectedFilters,
-            1,
+            page, 
             PAGE_SIZE
           );
           const sortedCars = filteredCars.sort((a, b) =>
@@ -46,42 +46,42 @@ const MarketplaceContainer: FC = () => {
           );
           setCars(sortedCars);
           setTotalCount(totalCount);
-          setPage(1);
         } else {
           const {
             cars: carData,
             totalCount,
             filters,
-          } = await fetchCarData(1, PAGE_SIZE);
+          } = await fetchCarData(page, PAGE_SIZE);
           const sortedCars = carData.sort((a, b) =>
             sortOrder === "desc" ? b.price - a.price : a.price - b.price
           );
           setCars(sortedCars);
           setTotalCount(totalCount);
           setFilters(filters);
-          setPage(1);
         }
       } catch (error) {
-        console.error("Error al cambiar el orden de los datos:", error);
+        console.error("Error al cargar los datos:", error);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [sortOrder, selectedFilters]);
+  }, [page, sortOrder, selectedFilters]);
+  
 
   const handleApplyFilters = async (newFilters: Partial<ICarType>) => {
     setLoading(true);
     try {
       const { cars: filteredCars, totalCount } = await fetchFilteredCarData(
         newFilters,
-        page,
+        1, 
         PAGE_SIZE
       );
       setCars(filteredCars);
       setTotalCount(totalCount);
       setSelectedFilters(newFilters);
+      setPage(1); 
       onClose();
     } catch (error) {
       console.error("Error al aplicar filtros:", error);
@@ -89,6 +89,7 @@ const MarketplaceContainer: FC = () => {
       setLoading(false);
     }
   };
+  
 
   const handleRemoveFilter = async (key: keyof ICarType) => {
     const updatedFilters = { ...selectedFilters };
@@ -207,9 +208,9 @@ const MarketplaceContainer: FC = () => {
           page={page}
           totalCount={totalCount}
           pageSize={PAGE_SIZE}
-          onPressAfter={() => setPage(page + 1)}
-          onPressPrev={() => setPage(page - 1)}
-          onChangePage={setPage}
+          onPressPrev={() => setPage((prev) => Math.max(prev - 1, 1))}
+          onPressAfter={() => setPage((prev) => prev + 1)}
+          onChangePage={(newPage) => setPage(newPage)}
         />
       </div>
     </div>
