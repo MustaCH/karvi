@@ -9,6 +9,7 @@ import FiltersContainer from "../filters-container";
 import { GridControlers } from "@/app/components/grid-controllers";
 import CarCardContainer from "../car-card-container";
 import PaginationContainer from "../pagination-container";
+import { useMediaQuery } from "react-responsive";
 
 const PAGE_SIZE = 12;
 
@@ -17,6 +18,7 @@ const MarketplaceContainer: FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
+  const isWideScreen = useMediaQuery({ query: "(min-width: 768px)" });
   const [gridMode, setGridMode] = useState<boolean>(false);
   const [sortOrder, setSortOrder] = useState<string>("desc");
   const [filters, setFilters] = useState<
@@ -26,13 +28,8 @@ const MarketplaceContainer: FC = () => {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
   useEffect(() => {
-    const handleResize = () => {
-      setGridMode(window.innerWidth >= 768);
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    setGridMode(isWideScreen);
+  }, [isWideScreen]);
 
   useEffect(() => {
     const fetchData = async () => {
