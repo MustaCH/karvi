@@ -36,7 +36,7 @@ export const PaginationContainer: FC<PaginationContainerProps> = ({
           cursor:
             "text-small text-blue-500 bg-transparent rounded-none font-bold border-t-2 border-primary",
         }}
-        total={Math.ceil(totalCount / pageSize)}
+        total={Math.max(1, Math.ceil(totalCount / pageSize))} 
         initialPage={1}
         page={page}
         onChange={onChangePage}

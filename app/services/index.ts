@@ -1,10 +1,26 @@
 import axios from "axios";
-import { ICarType } from "@/app/types";
+import { ICarType, IFilterType } from "@/app/types";
 
 const API_URL =
   "/api/challenge/cars/ASST-challenge-01JEVJTR90HVPSS2NRPPG02CJ3.json";
+  
+  const filterOrder = [
+    "brand", 
+    "model", 
+    "year", 
+    "version", 
+    "city"
+  ];
 
 type FilterCounts = Record<string, Record<string, number>>;
+
+export interface IFiltersResponse {
+  year: IFilterType[];
+  city: IFilterType[];
+  brand: IFilterType[];
+  model: IFilterType[];
+  version: IFilterType[];
+}
 
 export const fetchCarData = async (
   page: number = 1,
@@ -16,7 +32,7 @@ export const fetchCarData = async (
       const startIndex = (page - 1) * pageSize;
       const endIndex = startIndex + pageSize;
       const cars = response.data.items.slice(startIndex, endIndex);
-      const totalCount = response.data.totalCount;
+      const totalCount = response.data.items.length;
 
       const filters: FilterCounts = {};
       response.data.items.forEach((car: ICarType) => {
@@ -41,6 +57,28 @@ export const fetchCarData = async (
     console.error("Error al consumir la API:", error);
     throw error;
   }
+};
+
+export const fetchAvailableFilters = async (): Promise<IFiltersResponse> => { 
+  try { 
+    const response = await axios.get(API_URL); 
+    const availableFilters: Record<string, IFilterType[]> = response.data.availableFilters; 
+    const orderedFilters: IFiltersResponse = { 
+      brand: [], 
+      model: [], 
+      year: [], 
+      version: [], 
+      city: [] 
+    }; 
+    filterOrder.forEach((key) => { 
+      if (key in availableFilters) { 
+        orderedFilters[key as keyof IFiltersResponse] = availableFilters[key]; 
+      } 
+    }); 
+    return orderedFilters; 
+  } catch (error) { 
+    throw new Error('No se pudo obtener los filtros disponibles'); 
+  } 
 };
 
 export const fetchFilteredCarData = async (

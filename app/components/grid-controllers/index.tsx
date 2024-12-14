@@ -53,7 +53,7 @@ export const GridControlers: FC<GridControlersProps> = ({
         variant="light"
         color="primary"
       >
-        {sortOrder === "desc" ? "Mayor Precio" : "Menor Precio"}
+        {sortOrder === "desc" ? "Menor Precio" : "Mayor Precio"}
       </Button>
     </div>
   );

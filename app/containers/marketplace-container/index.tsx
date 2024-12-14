@@ -1,6 +1,6 @@
 "use client";
 
-import { FilterChips, FilterDrawer, MobileControlers } from "@/app/components";
+import { FilterChips, FilterDrawer, MobileControlers, NoResultsCard } from "@/app/components";
 import { ICarType } from "@/app/types";
 import { FC, useEffect, useState } from "react";
 import { useDisclosure } from "@nextui-org/react";
@@ -36,7 +36,7 @@ const MarketplaceContainer: FC = () => {
       setLoading(true);
       try {
         if (Object.keys(selectedFilters).length > 0) {
-          const { cars: filteredCars, totalCount } = await fetchFilteredCarData(
+          const { cars: filteredCars } = await fetchFilteredCarData(
             selectedFilters,
             page, 
             PAGE_SIZE
@@ -163,6 +163,24 @@ const MarketplaceContainer: FC = () => {
     }
   };
 
+  const handlePageChange = async (newPage: number) => {
+    setLoading(true);
+    try {
+      const { cars: newCars } = await fetchCarData(newPage, PAGE_SIZE);
+      if (newCars.length > 0) {
+        setCars(newCars);
+        setPage(newPage);
+      } else {
+        console.warn("No hay contenido en esta página.");
+      }
+    } catch (error) {
+      console.error("Error al cambiar de página:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
   return (
     <div className="flex flex-col lg:grid grid-cols-5 pt-8">
       <div className="hidden lg:inline mt-4">
@@ -210,7 +228,7 @@ const MarketplaceContainer: FC = () => {
           pageSize={PAGE_SIZE}
           onPressPrev={() => setPage((prev) => Math.max(prev - 1, 1))}
           onPressAfter={() => setPage((prev) => prev + 1)}
-          onChangePage={(newPage) => setPage(newPage)}
+          onChangePage={handlePageChange}
         />
       </div>
     </div>

@@ -15,7 +15,7 @@ export const FilterChips: FC<FilterChipsProps> = ({
   onClearFilters,
 }) => {
   return (
-    <div className="flex flex-col gap-8 md:flex-row justify-between w-full px-4">
+    <div className="flex flex-col gap-8 lg:flex-row justify-between w-full px-4">
       <div className="flex gap-2 mt-2">
         {Object.entries(selectedFilters).map(([key, value]) => (
           <Chip
@@ -32,7 +32,7 @@ export const FilterChips: FC<FilterChipsProps> = ({
         <div>
           <Button
             onPress={onClearFilters}
-            className="text-md w-full md:w-fit"
+            className="text-md w-full lg:w-fit"
             color="primary"
             variant="light"
             startContent={<HiOutlineTrash />}

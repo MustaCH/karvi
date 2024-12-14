@@ -1,9 +1,9 @@
 "use client";
 
-import { ICarType } from "@/app/types";
-import { Accordion, AccordionItem, Button } from "@nextui-org/react";
+import { ICarType, IFilterType } from "@/app/types";
 import { FC, useState, useEffect } from "react";
-import filterList from "./constants";
+import { fetchAvailableFilters, IFiltersResponse } from "@/app/services";
+import { Accordion } from "@/app/components";
 
 interface FiltersContainerProps {
   filters: Record<string, Record<string, number>>;
@@ -18,9 +18,17 @@ export const FiltersContainer: FC<FiltersContainerProps> = ({
   selectedFilters,
   allCars,
 }) => {
-  const [filteredCars, setFilteredCars] = useState<ICarType[] | undefined>(
-    allCars
-  );
+  const [filterList, setFilterList] = useState<IFiltersResponse | undefined>(undefined);
+  const [filteredCars, setFilteredCars] = useState<ICarType[] | undefined>(allCars);
+
+  useEffect(() => {
+    const fetchFilters = async () => {
+      const filters = await fetchAvailableFilters();
+      setFilterList(filters);
+    };
+
+    fetchFilters();
+  }, []);
 
   const applyFilters = (filters: Partial<ICarType>) => {
     let filtered = allCars;
@@ -61,30 +69,26 @@ export const FiltersContainer: FC<FiltersContainerProps> = ({
 
   return (
     <div>
-      <Accordion>
-        {filterList.map((filter, i) => (
-          <AccordionItem
-            className="text-sm font-semibold"
-            key={i}
-            title={filter.title}
-          >
-            <div className="flex flex-col">
-              {filters[filter.id] &&
-                Object.entries(filters[filter.id]).map(([value]) => {
+      {filterList ? (
+        <>
+          {Object.entries(filterList).map(([filterKey, filterValues]) => (
+            <Accordion title={filterKey} key={filterKey}>
+              <div className="flex flex-col">
+                {filterValues.map((filter: IFilterType) => {
                   const filteredCount = filteredCars?.filter(
-                    (car) => car[filter.id as keyof ICarType] === value
+                    (car) => car[filterKey as keyof ICarType] === filter.id
                   ).length;
 
                   return (
-                    <Button
-                      key={value}
-                      className="w-fit bg-transparent text-start font-semibold text-xs"
-                      onPress={() =>
-                        handleFilterChange(filter.id as keyof ICarType, value)
+                    <button
+                      key={filter.id}
+                      className={`w-fit bg-transparent text-start font-semibold text-xs py-2 px-4 ${filteredCount === 0 ? 'text-gray-800/30' : 'text-gray-800'}`}
+                      onClick={() =>
+                        handleFilterChange(filterKey as keyof ICarType, filter.id)
                       }
-                      isDisabled={filteredCount === 0}
+                      disabled={filteredCount === 0}
                     >
-                      {value}{" "}
+                      {filter.name}{" "}
                       <span
                         className={`${
                           filteredCount && filteredCount > 0
@@ -94,13 +98,18 @@ export const FiltersContainer: FC<FiltersContainerProps> = ({
                       >
                         ({filteredCount})
                       </span>
-                    </Button>
+                    </button>
                   );
                 })}
-            </div>
-          </AccordionItem>
-        ))}
-      </Accordion>
+              </div>
+            </Accordion>
+          ))}
+        </>
+      ) : (
+        <div className="grid place-items-center h-full">
+          <p>Loading filters...</p>
+        </div>
+      )}
     </div>
   );
 };

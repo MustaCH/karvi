@@ -10,6 +10,6 @@ export type ICarType = {
 }
 
 export type IFilterType = {
-    id: string,
-    title: string
+    id: string | number,
+    name: string
 }
