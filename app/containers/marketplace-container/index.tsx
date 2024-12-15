@@ -192,7 +192,7 @@ const MarketplaceContainer: FC = () => {
         />
       </div>
       <div className="lg:hidden flex justify-evenly items-center">
-        <MobileControlers onOpen={onOpen} />
+        <MobileControlers onOpen={onOpen} applyedFilters={selectedFilters}/>
         <FilterDrawer
           isOpen={isOpen}
           cars={cars}
