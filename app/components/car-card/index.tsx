@@ -7,7 +7,6 @@ import { Button, Chip } from "@nextui-org/react";
 import { FC } from "react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { useFavorites } from "@/app/context/favoritesContext";
-import Image from "next/image";
 
 interface CarCardProps {
   car: ICarType;
