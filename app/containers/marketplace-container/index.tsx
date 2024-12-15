@@ -179,7 +179,6 @@ const MarketplaceContainer: FC = () => {
       setLoading(false);
     }
   };
-  
 
   return (
     <div className="flex flex-col lg:grid grid-cols-5 pt-8">

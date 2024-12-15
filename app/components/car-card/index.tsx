@@ -1,9 +1,11 @@
+'use client'
+
 import { CashRegisterIcon } from "@/app/icons";
 import { ICarType } from "@/app/types";
 import { NumberFormatter } from "@/app/utils";
 import { Button, Chip } from "@nextui-org/react";
-import { FC } from "react";
-import { BsHeart } from "react-icons/bs";
+import { FC, useEffect, useState } from "react";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 
 interface CarCardProps {
   car: ICarType;
@@ -11,6 +13,30 @@ interface CarCardProps {
 }
 
 export const CarCard: FC<CarCardProps> = ({ car, gridMode }) => {
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    setIsFavorite(favorites.some((favorite: ICarType) => favorite.id === car.id));
+  }, [car.id]);
+
+  const toggleFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+    if (isFavorite) {
+      const updatedFavorites = favorites.filter(
+        (favorite: ICarType) => favorite.id !== car.id
+      );
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      setIsFavorite(false);
+    } else {
+      favorites.push(car);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      setIsFavorite(true);
+    }
+  };
+    
+
   return (
     <div
       className={`flex ${
@@ -34,8 +60,9 @@ export const CarCard: FC<CarCardProps> = ({ car, gridMode }) => {
           className={`absolute top-1 right-1 z-50 ${
             gridMode ? "bg-white" : "bg-white/50"
           }`}
+          onPress={toggleFavorite}
         >
-          <BsHeart />
+          {!isFavorite ? <BsHeart /> : <BsHeartFill className="text-blue-700 "/>}
         </Button>
         <img
           className="h-full w-full object-cover"
