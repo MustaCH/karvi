@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import {NextUIProvider} from "@nextui-org/react";
+import { FavoritesProvider } from "./context/favoritesContext";
 
 
 const raleway = localFont({
@@ -24,9 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en">
         <body className={`${raleway.variable} antialiased bg-gray-300/10`}>
-          <NextUIProvider>
-            {children}
-          </NextUIProvider>
+          <FavoritesProvider>
+            <NextUIProvider>
+              {children}
+            </NextUIProvider>
+          </FavoritesProvider>
         </body>
     </html>
   );

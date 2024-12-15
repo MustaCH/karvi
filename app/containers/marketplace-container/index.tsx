@@ -10,11 +10,13 @@ import { GridControlers } from "@/app/components/grid-controllers";
 import CarCardContainer from "../car-card-container";
 import PaginationContainer from "../pagination-container";
 import { useMediaQuery } from "react-responsive";
+import { useFavorites } from "@/app/context/favoritesContext";
 
 const PAGE_SIZE = 12;
 
 const MarketplaceContainer: FC = () => {
   const [cars, setCars] = useState<ICarType[]>([]);
+  const { favorites } = useFavorites();
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
@@ -32,20 +34,13 @@ const MarketplaceContainer: FC = () => {
     setGridMode(isWideScreen);
   }, [isWideScreen]);
 
-  const getFavoriteCars = (): ICarType[] => {
-    const favorites = localStorage.getItem("favorites");
-    const favoriteIds = favorites ? JSON.parse(favorites) : [];
-    return favoriteIds.map((id: number) => cars.find((car) => car.id === id)).filter(Boolean) as ICarType[];
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         if (showFavorites) {
-          const favoriteCars = getFavoriteCars();
-          setCars(favoriteCars);
-          setTotalCount(favoriteCars.length);
+          setCars(favorites);
+          setTotalCount(favorites.length);
         } else if (Object.keys(selectedFilters).length > 0) {
           const { cars: filteredCars } = await fetchFilteredCarData(
             selectedFilters,
@@ -80,7 +75,13 @@ const MarketplaceContainer: FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page, sortOrder, selectedFilters, showFavorites]);
 
-
+  const getFavoriteCars = (): ICarType[] => {
+    const favorites = localStorage.getItem("favorites");
+    const favoriteIds = favorites ? JSON.parse(favorites) : [];
+    return favoriteIds
+      .map((id: number) => cars.find((car) => car.id === id))
+      .filter(Boolean) as ICarType[];
+  };
 
   const handleApplyFilters = async (newFilters: Partial<ICarType>) => {
     setLoading(true);
@@ -226,6 +227,7 @@ const MarketplaceContainer: FC = () => {
           totalCount={totalCount}
           gridMode={gridMode}
           sortOrder={sortOrder}
+          favorites={favorites}
           onPressMode={() => setGridMode(!gridMode)}
           onPressSort={() =>
             setSortOrder(sortOrder === "desc" ? "asc" : "desc")

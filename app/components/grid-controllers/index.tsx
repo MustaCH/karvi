@@ -1,13 +1,15 @@
+import { ICarType } from "@/app/types";
 import { NumberFormatter } from "@/app/utils";
 import { Button } from "@nextui-org/react";
 import { FC } from "react";
-import { BsGrid, BsHeart, BsListUl } from "react-icons/bs";
+import { BsGrid, BsHeart, BsHeartFill, BsListUl } from "react-icons/bs";
 import { TbArrowsSort } from "react-icons/tb";
 
 interface GridControlersProps {
   totalCount: number;
   gridMode: boolean;
   sortOrder: string;
+  favorites?: ICarType[];
   onPressMode: () => void;
   onPressSort: () => void;
   onToggleFavorites: () => void;
@@ -17,6 +19,7 @@ export const GridControlers: FC<GridControlersProps> = ({
   totalCount,
   gridMode,
   sortOrder,
+  favorites,
   onPressMode,
   onPressSort,
   onToggleFavorites
@@ -30,8 +33,8 @@ export const GridControlers: FC<GridControlersProps> = ({
           endContent="resultados"
         />
       </div>
-      <Button variant="light" startContent={<BsHeart />} onPress={onToggleFavorites} className="text-sm flex items-center gap-2 text-blue-700">
-        Favoritos
+      <Button variant="light" startContent={favorites?.length === 0 ? <BsHeart /> : <BsHeartFill />} onPress={onToggleFavorites} className="text-sm flex items-center gap-2 text-blue-700">
+        Favoritos {favorites?.length !== 0 && <span>({favorites?.length})</span>}
       </Button>
       <div className="md:hidden w-full flex justify-end">
         <Button

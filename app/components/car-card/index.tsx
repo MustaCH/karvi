@@ -4,8 +4,9 @@ import { CashRegisterIcon } from "@/app/icons";
 import { ICarType } from "@/app/types";
 import { NumberFormatter } from "@/app/utils";
 import { Button, Chip } from "@nextui-org/react";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { useFavorites } from "@/app/context/favoritesContext";
 
 interface CarCardProps {
   car: ICarType;
@@ -19,29 +20,9 @@ const carImages: string[] = [
 ]
 
 export const CarCard: FC<CarCardProps> = ({ car, gridMode }) => {
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const { favorites, toggleFavorite } = useFavorites();
 
-  useEffect(() => {
-    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-    setIsFavorite(favorites.some((favorite: ICarType) => favorite.id === car.id));
-  }, [car.id]);
-
-  const toggleFavorite = () => {
-    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-
-    if (isFavorite) {
-      const updatedFavorites = favorites.filter(
-        (favorite: ICarType) => favorite.id !== car.id
-      );
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      setIsFavorite(false);
-    } else {
-      favorites.push(car);
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-      setIsFavorite(true);
-    }
-  };
-    
+  const isFavorite = favorites.some((favorite) => favorite.id === car.id);
 
   return (
     <div
@@ -66,13 +47,13 @@ export const CarCard: FC<CarCardProps> = ({ car, gridMode }) => {
           className={`absolute top-1 right-1 z-50 ${
             gridMode ? "bg-white" : "bg-white/50"
           }`}
-          onPress={toggleFavorite}
+          onPress={() => toggleFavorite(car)}
         >
-          {!isFavorite ? <BsHeart /> : <BsHeartFill className="text-blue-700 "/>}
+          {!isFavorite ? <BsHeart /> : <BsHeartFill className="text-blue-700 " />}
         </Button>
         <img
           className="h-full w-full object-cover"
-          src="https://s3-alpha-sig.figma.com/img/210d/0755/dd24cb0bde29a2119e23f3236f743cb1?Expires=1734912000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=OZzB022UCqsUrhwyzFZyKZszyEylpxPoOtkj-lCQoZvGkhO787Ko0ANqixcqkTSANDEPzMuUMHez2Rl9t2M2goJTqXPjZgKgyhHBlICuMLAvsLVrVfM28CqgK7jy5maJuct-QaYIe7gR5r-rXX1qZFKqXKcZMu1kCzsdvPoLnPh8N-DoT3PKLlVx4QlrEDargzSS1bh-jmn9WHGy7i2KDemgalKn9sw53B2pr9mjiTmI6Bm8~I7JWG7V-aQikgbT5mm2GnvnOWcZmOK4eUgM3R4NsRZcb0htyayUbilA~fJ0nNzfWM2CzJDYeHTc2M0Ou0gJ0qV36oXsbODim2QlCw__"
+          src={carImages[0]} 
         />
       </div>
       <div className="flex flex-col gap-1">
