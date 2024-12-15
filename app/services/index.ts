@@ -85,7 +85,8 @@ export const fetchAvailableFilters = async (): Promise<IFiltersResponse> => {
 export const fetchFilteredCarData = async (
   filters: Partial<ICarType>,
   page: number = 1,
-  pageSize: number = 12
+  pageSize: number = 12,
+  searchTerm: string = "" 
 ): Promise<{ cars: ICarType[]; totalCount: number }> => {
   try {
     const { cars: allCars } = await fetchCarData();
@@ -97,7 +98,11 @@ export const fetchFilteredCarData = async (
         (!filters.price || car.price <= filters.price) &&
         (!filters.version || car.version === filters.version) &&
         (!filters.mileage || car.mileage <= filters.mileage) &&
-        (!filters.city || car.city === filters.city)
+        (!filters.city || car.city === filters.city) &&
+        (searchTerm === "" || 
+          car.brand.toLowerCase().includes(searchTerm.toLowerCase()) || 
+          car.model.toLowerCase().includes(searchTerm.toLowerCase()) ||  
+          car.version.toLowerCase().includes(searchTerm.toLowerCase()))  
     );
     const startIndex = (page - 1) * pageSize;
     const endIndex = startIndex + pageSize;
@@ -108,3 +113,4 @@ export const fetchFilteredCarData = async (
     throw error;
   }
 };
+

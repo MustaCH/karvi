@@ -167,6 +167,25 @@ const MarketplaceContainer: FC = () => {
     }
   };
 
+  const handleSearch = async (searchTerm: string) => {
+    setLoading(true);
+    try {
+      const { cars: filteredCars, totalCount } = await fetchFilteredCarData(
+        { ...selectedFilters },
+        page,
+        PAGE_SIZE,
+        searchTerm
+      );
+      setCars(filteredCars);
+      setTotalCount(totalCount);
+    } catch (error) {
+      console.error("Error al realizar la búsqueda:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
   const handlePageChange = async (newPage: number) => {
     setLoading(true);
     try {
@@ -195,7 +214,11 @@ const MarketplaceContainer: FC = () => {
         />
       </div>
       <div className="lg:hidden flex justify-evenly items-center">
-        <MobileControlers onOpen={onOpen} applyedFilters={selectedFilters}/>
+        <MobileControlers 
+          onOpen={onOpen} 
+          applyedFilters={selectedFilters} 
+          onSearch={handleSearch} 
+        />
         <FilterDrawer
           isOpen={isOpen}
           cars={cars}
