@@ -24,3 +24,19 @@ body {
     text-wrap: balance;
   }
 }
+
+.swiper-pagination-bullet {
+  background-color: white !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white !important;
+  width: 2rem;
+  height: 0.5rem;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-inactive {
+  background-color: white !important;
+  opacity: 0.8;
+}
