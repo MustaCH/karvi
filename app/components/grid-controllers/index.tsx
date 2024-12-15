@@ -20,8 +20,8 @@ export const GridControlers: FC<GridControlersProps> = ({
   onPressSort,
 }) => {
   return (
-    <div className="grid grid-cols-3 place-items-center pt-4 md:px-8">
-      <div className="md:w-full md:flex justify-start">
+    <div className="grid grid-cols-3 place-items-center pt-4 px-8">
+      <div className="w-full flex justify-start">
         <NumberFormatter
           value={totalCount}
           className="text-xs"
@@ -31,18 +31,19 @@ export const GridControlers: FC<GridControlersProps> = ({
       <Button variant="light" startContent={<BsHeart />} className="text-sm flex items-center gap-2 text-blue-700">
         Favoritos
       </Button>
-      <Button
-        className="md:hidden"
-        isIconOnly
-        variant="light"
-        onPress={onPressMode}
-      >
-        {gridMode ? (
-          <BsListUl className="text-gray-700 text-xl" />
-        ) : (
-          <BsGrid className="text-gray-700 text-xl" />
-        )}
-      </Button>
+      <div className="md:hidden w-full flex justify-end">
+        <Button
+          isIconOnly
+          variant="light"
+          onPress={onPressMode}
+        >
+          {gridMode ? (
+            <BsListUl className="text-gray-700 text-xl" />
+          ) : (
+            <BsGrid className="text-gray-700 text-xl" />
+          )}
+        </Button>
+      </div>
       <div className="md:w-full md:flex justify-end">        
         <Button
           onPress={onPressSort}
