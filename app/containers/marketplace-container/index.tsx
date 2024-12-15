@@ -75,14 +75,6 @@ const MarketplaceContainer: FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page, sortOrder, selectedFilters, showFavorites]);
 
-  const getFavoriteCars = (): ICarType[] => {
-    const favorites = localStorage.getItem("favorites");
-    const favoriteIds = favorites ? JSON.parse(favorites) : [];
-    return favoriteIds
-      .map((id: number) => cars.find((car) => car.id === id))
-      .filter(Boolean) as ICarType[];
-  };
-
   const handleApplyFilters = async (newFilters: Partial<ICarType>) => {
     setLoading(true);
     try {

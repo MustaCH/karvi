@@ -7,6 +7,7 @@ import { Button, Chip } from "@nextui-org/react";
 import { FC } from "react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { useFavorites } from "@/app/context/favoritesContext";
+import Image from "next/image";
 
 interface CarCardProps {
   car: ICarType;
@@ -51,9 +52,10 @@ export const CarCard: FC<CarCardProps> = ({ car, gridMode }) => {
         >
           {!isFavorite ? <BsHeart /> : <BsHeartFill className="text-blue-700 " />}
         </Button>
-        <img
+        <Image
           className="h-full w-full object-cover"
           src={carImages[0]} 
+          alt={car.model}
         />
       </div>
       <div className="flex flex-col gap-1">
