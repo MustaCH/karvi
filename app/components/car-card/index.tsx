@@ -52,7 +52,7 @@ export const CarCard: FC<CarCardProps> = ({ car, gridMode }) => {
         >
           {!isFavorite ? <BsHeart /> : <BsHeartFill className="text-blue-700 " />}
         </Button>
-        <Image
+        <img
           className="h-full w-full object-cover"
           src={carImages[0]} 
           alt={car.model}
