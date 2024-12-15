@@ -1,6 +1,6 @@
 # Karvi - Challenge
 
-Este proyecto consiste en un marketplace de productos, específicamente vehículos. En la plataforma se muestran tarjetas con los diferentes autos disponibles, las cuales incluyen un carrusel de imágenes para visualizar las diferentes fotos de cada vehículo. Además, se incorpora una barra de filtros que permite a los usuarios encontrar los productos de su interés de manera más eficiente. También dispone de una sección de favoritos, donde el usuario puede almacenar temporalmente los artículos que desea tener a mano. En la versión móvil, el proyecto ofrece la opción de cambiar entre vista de lista y vista de grilla para mejorar la experiencia de navegación.
+Este proyecto es un marketplace dedicado a la compra y venta de vehículos. La plataforma presenta tarjetas de productos con información detallada de cada auto, acompañadas de un carrusel de imágenes que permite al usuario visualizar las fotos del vehículo desde diferentes ángulos. Además, incluye una barra de filtros que facilita la búsqueda de autos según las preferencias del usuario, optimizando la experiencia de navegación. Los usuarios también pueden agregar vehículos a una sección de favoritos, donde podrán acceder rápidamente a sus artículos de interés. En dispositivos móviles, la aplicación ofrece la opción de alternar entre una vista de lista y una vista de grilla, adaptándose así a las necesidades de visualización y mejorando la usabilidad.
 
 ## Tecnologías utilizadas
 - [Next.js](https://nextjs.org/)
