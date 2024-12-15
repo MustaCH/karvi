@@ -26,16 +26,27 @@ const MarketplaceContainer: FC = () => {
   >({});
   const [selectedFilters, setSelectedFilters] = useState<Partial<ICarType>>({});
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const [showFavorites, setShowFavorites] = useState<boolean>(false);
 
   useEffect(() => {
     setGridMode(isWideScreen);
   }, [isWideScreen]);
 
+  const getFavoriteCars = (): ICarType[] => {
+    const favorites = localStorage.getItem("favorites");
+    const favoriteIds = favorites ? JSON.parse(favorites) : [];
+    return favoriteIds.map((id: number) => cars.find((car) => car.id === id)).filter(Boolean) as ICarType[];
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        if (Object.keys(selectedFilters).length > 0) {
+        if (showFavorites) {
+          const favoriteCars = getFavoriteCars();
+          setCars(favoriteCars);
+          setTotalCount(favoriteCars.length);
+        } else if (Object.keys(selectedFilters).length > 0) {
           const { cars: filteredCars } = await fetchFilteredCarData(
             selectedFilters,
             page, 
@@ -67,8 +78,9 @@ const MarketplaceContainer: FC = () => {
     };
     fetchData();
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [page, sortOrder, selectedFilters]);
-  
+  }, [page, sortOrder, selectedFilters, showFavorites]);
+
+
 
   const handleApplyFilters = async (newFilters: Partial<ICarType>) => {
     setLoading(true);
@@ -89,7 +101,6 @@ const MarketplaceContainer: FC = () => {
       setLoading(false);
     }
   };
-  
 
   const handleRemoveFilter = async (key: keyof ICarType) => {
     const updatedFilters = { ...selectedFilters };
@@ -219,6 +230,7 @@ const MarketplaceContainer: FC = () => {
           onPressSort={() =>
             setSortOrder(sortOrder === "desc" ? "asc" : "desc")
           }
+          onToggleFavorites={() => setShowFavorites(!showFavorites)}
         />
         <CarCardContainer gridMode={gridMode} loading={loading} cars={cars} />
         <PaginationContainer

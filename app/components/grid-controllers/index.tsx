@@ -10,6 +10,7 @@ interface GridControlersProps {
   sortOrder: string;
   onPressMode: () => void;
   onPressSort: () => void;
+  onToggleFavorites: () => void;
 }
 
 export const GridControlers: FC<GridControlersProps> = ({
@@ -18,6 +19,7 @@ export const GridControlers: FC<GridControlersProps> = ({
   sortOrder,
   onPressMode,
   onPressSort,
+  onToggleFavorites
 }) => {
   return (
     <div className="grid grid-cols-3 place-items-center pt-4 px-8">
@@ -28,7 +30,7 @@ export const GridControlers: FC<GridControlersProps> = ({
           endContent="resultados"
         />
       </div>
-      <Button variant="light" startContent={<BsHeart />} className="text-sm flex items-center gap-2 text-blue-700">
+      <Button variant="light" startContent={<BsHeart />} onPress={onToggleFavorites} className="text-sm flex items-center gap-2 text-blue-700">
         Favoritos
       </Button>
       <div className="md:hidden w-full flex justify-end">
