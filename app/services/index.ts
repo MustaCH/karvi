@@ -77,6 +77,7 @@ export const fetchAvailableFilters = async (): Promise<IFiltersResponse> => {
     }); 
     return orderedFilters; 
   } catch (error) { 
+    console.error(error)
     throw new Error('No se pudo obtener los filtros disponibles'); 
   } 
 };

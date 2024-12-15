@@ -13,7 +13,6 @@ interface FiltersContainerProps {
 }
 
 export const FiltersContainer: FC<FiltersContainerProps> = ({
-  filters,
   onApplyFilters,
   selectedFilters,
   allCars,

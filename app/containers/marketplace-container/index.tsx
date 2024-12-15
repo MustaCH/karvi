@@ -1,6 +1,6 @@
 "use client";
 
-import { FilterChips, FilterDrawer, MobileControlers, NoResultsCard } from "@/app/components";
+import { FilterChips, FilterDrawer, MobileControlers } from "@/app/components";
 import { ICarType } from "@/app/types";
 import { FC, useEffect, useState } from "react";
 import { useDisclosure } from "@nextui-org/react";
