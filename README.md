@@ -17,7 +17,7 @@ Sigue los pasos a continuación para instalar y ejecutar el proyecto en tu entor
 
 1. Clona este repositorio:
    ```bash
-   git clone https://github.com/usuario/karvi-challenge.git
+   git clone https://github.com/MustaCH/karvi.git
 
 
 1. Navega al directorio del proyecto:
