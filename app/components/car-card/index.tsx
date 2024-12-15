@@ -7,7 +7,7 @@ import { Button, Chip } from "@nextui-org/react";
 import { FC, useEffect, useState } from "react";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -75,7 +75,7 @@ export const CarCard: FC<CarCardProps> = ({ car, gridMode }) => {
           {!isFavorite ? <BsHeart /> : <BsHeartFill className="text-blue-700 " />}
         </Button>
         <Swiper
-          spaceBetween={10}
+          spaceBetween={0}
           slidesPerView={1}
           loop
           pagination={{ clickable: true }}
