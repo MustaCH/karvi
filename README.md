@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Karvi - Challenge
 
-## Getting Started
+Este proyecto consiste en un marketplace de productos, específicamente vehículos. En la plataforma se muestran tarjetas con los diferentes autos disponibles, las cuales incluyen un carrusel de imágenes para visualizar las diferentes fotos de cada vehículo. Además, se incorpora una barra de filtros que permite a los usuarios encontrar los productos de su interés de manera más eficiente. También dispone de una sección de favoritos, donde el usuario puede almacenar temporalmente los artículos que desea tener a mano. En la versión móvil, el proyecto ofrece la opción de cambiar entre vista de lista y vista de grilla para mejorar la experiencia de navegación.
 
-First, run the development server:
+## Tecnologías utilizadas
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Axios](https://axios-http.com/)
+- [NextUI](https://nextui.org/)
+- [SwiperJS](https://swiperjs.com/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Instalación
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Sigue los pasos a continuación para instalar y ejecutar el proyecto en tu entorno local:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/usuario/karvi-challenge.git
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+1. Navega al directorio del proyecto:
+   ```bash
+   cd karvi
 
-To learn more about Next.js, take a look at the following resources:
+3. Instala las dependecias:
+    ```bash
+   npm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Ejecuta el entorno en modo desarrollo:
+     ```bash
+   npm run dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. Abre tu navegador y visita http://localhost:3000
 
-## Deploy on Vercel
+## Autor
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Ignacio Poletti
