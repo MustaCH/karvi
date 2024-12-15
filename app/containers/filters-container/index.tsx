@@ -4,6 +4,7 @@ import { ICarType, IFilterType } from "@/app/types";
 import { FC, useState, useEffect } from "react";
 import { fetchAvailableFilters, IFiltersResponse } from "@/app/services";
 import { Accordion } from "@/app/components";
+import { Spinner } from "@nextui-org/react";
 
 interface FiltersContainerProps {
   filters: Record<string, Record<string, number>>;
@@ -11,6 +12,15 @@ interface FiltersContainerProps {
   allCars?: ICarType[];
   onApplyFilters: (filters: Partial<ICarType>) => void;
 }
+
+const filterNameMap: Record<string, string> = {
+  brand: "marca",
+  year: "año",
+  model: "modelo",
+  price: "precio",
+  mileage: "kilometraje",
+  city: "ciudad",
+};
 
 export const FiltersContainer: FC<FiltersContainerProps> = ({
   onApplyFilters,
@@ -71,7 +81,10 @@ export const FiltersContainer: FC<FiltersContainerProps> = ({
       {filterList ? (
         <>
           {Object.entries(filterList).map(([filterKey, filterValues]) => (
-            <Accordion title={filterKey} key={filterKey}>
+            <Accordion
+              title={filterNameMap[filterKey] || filterKey}
+              key={filterKey}
+            >
               <div className="flex flex-col">
                 {filterValues.map((filter: IFilterType) => {
                   const filteredCount = filteredCars?.filter(
@@ -89,7 +102,7 @@ export const FiltersContainer: FC<FiltersContainerProps> = ({
                     >
                       {filter.name}{" "}
                       <span
-                        className={`${
+                        className={`$${
                           filteredCount && filteredCount > 0
                             ? "font-normal text-black/50"
                             : "opacity-0"
@@ -105,8 +118,8 @@ export const FiltersContainer: FC<FiltersContainerProps> = ({
           ))}
         </>
       ) : (
-        <div className="grid place-items-center h-full">
-          <p>Loading filters...</p>
+        <div className="grid place-items-center col-span-3 h-[80vh]">
+          <Spinner size="lg" />
         </div>
       )}
     </div>
